@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  Field,
+  Form,
+  SubmitButton,
+} from "./form";
+import * as yup from "yup";
 
 function App() {
+  const onSubmit = async (data) => {
+    alert(JSON.stringify(data));
+  };
+
+  const schema = yup.object().shape({
+    name: yup.string().required().label("Name"),
+    summary: yup.string().label("Summary"),
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container-fluid">
+      <div className="jumbotron m-5">
+        <Form schema={schema} onSubmit={onSubmit}>
+          <Field type="text" name="name" />
+          <Field type="textarea" name="summary" />
+          <SubmitButton label="Save" className="btn btn-block btn-success" />
+        </Form>
+      </div>
     </div>
   );
 }
